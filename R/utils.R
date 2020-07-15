@@ -129,6 +129,11 @@ is_windows = function() xfun::is_windows()
 is_osx = function() xfun::is_macos()
 is_linux = function() xfun::is_linux()
 
+# guess if the OS is 64bit
+is_64bit = function() {
+  length(grep('64', unlist(Sys.info()[c('machine', 'release')]))) > 0
+}
+
 is_rmarkdown = function(x) grepl('[.][Rr]markdown$', x)
 
 # build .Rmarkdown to .markdown, and .Rmd to .html
@@ -302,7 +307,7 @@ date_filename = function(path, date, replace = FALSE) {
   path
 }
 
-# give a filename, return a slug by removing the date and extension (and posible index.md)
+# give a filename, return a slug by removing the date and extension (and possible index.md)
 post_slug = function(x) {
   x = gsub('([.][[:alnum:]]+){1,2}$', '', x)
   if (basename(x) == 'index') x = dirname(x)
